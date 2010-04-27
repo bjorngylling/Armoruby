@@ -19,6 +19,8 @@ module Armoruby
                 :level => character['level'].to_i,
                 :class => {:id => character['classId'].to_i,
                            :name => character['class']},
+                :race => {:id => character['raceId'].to_i,
+                          :name => character['race']},
                 :faction => character['faction']}
       
       return result

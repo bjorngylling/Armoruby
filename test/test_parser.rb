@@ -2,35 +2,78 @@ require 'test/unit'
 
 require 'lib/armoruby'
 
-class DunderParserTest < Test::Unit::TestCase
+class DunderCharacterTest < Test::Unit::TestCase
 
-  def test_character_eu_outland
+  def initialize(arg)
     Armoruby.setup :region => "eu", :realm => "outland"
+    @char = Armoruby::Character.new("Tubal")
     
-    tubal = Armoruby::Character.new("Tubal")
-    
-    assert_instance_of Armoruby::Character, tubal
-    
-    assert_equal "Tubal", tubal.name
-    assert_equal 80, tubal.level
-    assert_equal "Priest", tubal.klass[:name]
-    assert_equal 5, tubal.klass[:id]
-    assert_equal "Alliance", tubal.faction
+    super
+  end
+
+  def test_class
+    assert_instance_of Armoruby::Character, @char
   end
   
-  def test_character_us_senjin
-    # Test another region and realm
+  def test_name
+    assert_equal "Tubal", @char.name
+  end
+  
+  def test_level
+    assert_equal 80, @char.level
+  end
+  
+  def test_klass
+    assert_equal "Priest", @char.klass[:name]
+    assert_equal 5, @char.klass[:id]
+  end
+  
+  def test_faction
+    assert_equal "Alliance", @char.faction
+  end
+  
+  def test_race
+    assert_equal "Dwarf", @char.race[:name]
+    assert_equal 3, @char.race[:id]
+  end
+  
+
+  
+end
+
+class DunderCharacterTestAnotherRegion < Test::Unit::TestCase
+
+  def initialize(arg)
     Armoruby.setup :region => "us", :realm => "sen'jin"
+    @char = Armoruby::Character.new("Segolene")
     
-    segolene = Armoruby::Character.new("Segolene")
+    super
+  end
+
+  def test_class
+    assert_instance_of Armoruby::Character, @char
+  end
     
-    assert_instance_of Armoruby::Character, segolene
-    
-    assert_equal "Segolene", segolene.name
-    assert_equal 80, segolene.level
-    assert_equal "Priest", segolene.klass[:name]
-    assert_equal 5, segolene.klass[:id]
-    assert_equal "Alliance", segolene.faction
+  def test_name
+    assert_equal "Segolene", @char.name
+  end
+  
+  def test_level
+    assert_equal 80, @char.level
+  end
+  
+  def test_klass
+    assert_equal "Priest", @char.klass[:name]
+    assert_equal 5, @char.klass[:id]
+  end
+  
+  def test_faction
+    assert_equal "Alliance", @char.faction
+  end
+  
+  def test_race
+    assert_equal "Night Elf", @char.race[:name]
+    assert_equal 4, @char.race[:id]
   end
   
 end
