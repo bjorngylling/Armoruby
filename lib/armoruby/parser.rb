@@ -5,12 +5,14 @@ module Armoruby
   class Parser
     
     def initialize(options = {})
-      @region = options[:region]
-      @realm = options[:realm]
+      # Setup our region and realm, fall back on some defaults if none are specified
+      @region = options[:region] || "eu"
+      @realm = options[:realm] || "outland"
     end
     
     def load_character(character_name)
-      xml_doc = parse
+      url = "http://#{@region}.wowarmory.com/character-sheet.xml?r=#{@realm}&cn=#{character_name}"
+      xml_doc = parse url
       
       character = xml_doc.at_css("character")
       result = {:name => character['name'],
@@ -19,15 +21,16 @@ module Armoruby
                            :name => character['class']},
                 :faction => character['faction']}
       
-      Armoruby::Character.new result
+      return result
     end
     
   private
-    def parse(options = {})
-      url = "http://eu.wowarmory.com/character-sheet.xml?r=Outland&cn=Tubal"
+    def parse(url)
+      
       Nokogiri::XML(open(url, "User-Agent" => 'Mozilla/5.0 Gecko/20070219 Firefox/2.0.0.2'))
       
     end
+    
   end
   
 end

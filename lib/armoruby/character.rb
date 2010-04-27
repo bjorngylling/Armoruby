@@ -2,18 +2,15 @@ module Armoruby
   
   ##
   # Note:
-  # The .class for this class will be overwritten to get the characters
-  # ingame class. If you want to make sure something is a Character class
-  # you should use .kind_of?()
+  # We can't overwrite .class so we just rename getting the character wow-class
+  # klass instead.
   class Character
-    include Armoruby
     
-    def initialize(attributes = {:name => "",
-                                 :level => 0,
-                                 :class => {:id => 0,
-                                            :name => "",
-                                            :image => ""},
-                                 :faction => ""})
+    def initialize(name)
+      attributes = Armoruby.parser.load_character name
+      
+      attributes[:klass] = attributes[:class]
+      attributes.delete :class
       
       self.class.class_eval "attr_reader :#{attributes.keys.join(', :')}"
       
@@ -21,13 +18,8 @@ module Armoruby
         key = "@#{key.to_s}".to_sym
         self.instance_variable_set key, attribute 
       end
-      
-      # @name = options[:name]
-      # @level = options[:level]
-      # @class = {:id => options[:class_id],
-      #           :name => options[:class_name]}
-      # @faction = options[:faction]
     end
+    
   end
   
 end

@@ -6,19 +6,13 @@ $:.unshift File.dirname(__FILE__)
 Dir["#{File.dirname(__FILE__)}/armoruby/*.rb"].each { |format| require "armoruby/#{File.basename format}" }
 
 module Armoruby
-    
-  attr_reader :parser
   
-  class API
-    include Armoruby
-    
-    def intialize(region, realm)
-      setup_parser(region, realm)
-    end
-    
-    def setup_parser(region, realm)
-      @parser = Armoruby::Parser.new(region, realm)
-    end
+  def self.setup(options = {})
+    @parser = Armoruby::Parser.new options
+  end
+  
+  def self.parser
+    @parser
   end
   
 end

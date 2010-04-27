@@ -4,21 +4,33 @@ require 'lib/armoruby'
 
 class DunderParserTest < Test::Unit::TestCase
 
-  def setup
-    @parser = nil
-    @parser = Armoruby::Parser.new
+  def test_character_eu_outland
+    Armoruby.setup :region => "eu", :realm => "outland"
+    
+    tubal = Armoruby::Character.new("Tubal")
+    
+    assert_instance_of Armoruby::Character, tubal
+    
+    assert_equal "Tubal", tubal.name
+    assert_equal 80, tubal.level
+    assert_equal "Priest", tubal.klass[:name]
+    assert_equal 5, tubal.klass[:id]
+    assert_equal "Alliance", tubal.faction
   end
-
-  def test_character
-    character = @parser.load_character("Tubal")
+  
+  def test_character_us_senjin
+    # Test another region and realm
+    Armoruby.setup :region => "us", :realm => "sen'jin"
     
-    assert_instance_of Armoruby::Character, character
+    segolene = Armoruby::Character.new("Segolene")
     
-    assert_equal "Tubal", character.name
-    assert_equal 80, character.level
-    assert_equal "Priest", character.class[:name]
-    assert_equal 5, character.class[:id]
-    assert_equal "Alliance", character.faction
+    assert_instance_of Armoruby::Character, segolene
+    
+    assert_equal "Segolene", segolene.name
+    assert_equal 80, segolene.level
+    assert_equal "Priest", segolene.klass[:name]
+    assert_equal 5, segolene.klass[:id]
+    assert_equal "Alliance", segolene.faction
   end
   
 end
