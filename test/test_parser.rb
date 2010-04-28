@@ -26,6 +26,10 @@ class DunderCharacterTest < Test::Unit::TestCase
   end
   
   def test_klass
+    # First make sure the Character#class has not be replaced
+    assert_equal Armoruby::Character, @@char.class
+    
+    # Check the characters class
     assert_equal "Priest", @@char.klass[:name]
     assert_equal 5, @@char.klass[:id]
   end
@@ -69,6 +73,9 @@ class DunderCharacterTestAnotherRegion < Test::Unit::TestCase
   end
   
   def test_klass
+    # First make sure the Character#class has not be replaced
+    assert_equal Armoruby::Character, @@char.class
+    
     assert_equal "Priest", @@char.klass[:name]
     assert_equal 5, @@char.klass[:id]
   end
