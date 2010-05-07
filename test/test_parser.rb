@@ -47,6 +47,24 @@ class DunderCharacterTest < Test::Unit::TestCase
     assert_equal 2, @@char.talents.length
   end
   
+  def test_is_a
+    assert @@char.is_a_priest?
+    assert @@char.is_a_dwarf?
+    assert !@@char.is_a_druid?
+  end
+  
+  def test_is_a_spec_class
+    stitchez = Armoruby::Character.new("Stitchez")
+    gib = Armoruby::Character.new("Gibolok")
+    
+    assert gib.is_a_warrior?
+    assert gib.is_a_prot_warrior?
+    
+    assert stitchez.is_a_unholy_death_knight?
+    
+    assert @@char.is_a_holy_priest?
+  end
+  
 end
 
 class DunderCharacterTestAnotherRegion < Test::Unit::TestCase
@@ -87,6 +105,11 @@ class DunderCharacterTestAnotherRegion < Test::Unit::TestCase
   def test_race
     assert_equal "Night Elf", @@char.race[:name]
     assert_equal 4, @@char.race[:id]
+  end
+  
+  def test_is_a
+    assert @@char.is_a_night_elf?
+    assert !@@char.is_a_death_knight?
   end
   
 end

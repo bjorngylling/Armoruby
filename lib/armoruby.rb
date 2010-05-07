@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'nokogiri'
+require 'rulebook'
 
 # Require all files in lib/armoruby
 $:.unshift File.dirname(__FILE__)
