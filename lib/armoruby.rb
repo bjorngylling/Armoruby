@@ -1,10 +1,11 @@
-require 'rubygems'
 require 'nokogiri'
 require 'rulebook'
 
 # Require all files in lib/armoruby
 $:.unshift File.dirname(__FILE__)
-Dir["#{File.dirname(__FILE__)}/armoruby/*.rb"].each { |format| require "armoruby/#{File.basename format}" }
+Dir["#{File.dirname(__FILE__)}/armoruby/*.rb"].each do |format| 
+  require_relative "armoruby/#{File.basename format}"
+end
 
 module Armoruby
   

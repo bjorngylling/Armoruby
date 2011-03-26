@@ -1,6 +1,6 @@
 require 'test/unit'
 
-require 'lib/armoruby'
+require_relative '../lib/armoruby'
 
 class DunderCharacterTest < Test::Unit::TestCase
   
@@ -8,8 +8,8 @@ class DunderCharacterTest < Test::Unit::TestCase
 
   def setup
     if !@@char
-      Armoruby.setup :region => "eu", :realm => "outland"
-      @@char = Armoruby::Character.new("Tubal")
+      Armoruby.setup :region => "eu", :realm => "karazhan"
+      @@char ||= Armoruby::Character.new("Tubal")
     end
   end
 
@@ -22,7 +22,7 @@ class DunderCharacterTest < Test::Unit::TestCase
   end
   
   def test_level
-    assert_equal 80, @@char.level
+    assert_equal 85, @@char.level
   end
   
   def test_klass
@@ -35,34 +35,31 @@ class DunderCharacterTest < Test::Unit::TestCase
   end
   
   def test_faction
-    assert_equal "Alliance", @@char.faction
+    assert_equal "Horde", @@char.faction
   end
   
   def test_race
-    assert_equal "Dwarf", @@char.race[:name]
-    assert_equal 3, @@char.race[:id]
+    assert_equal "Goblin", @@char.race[:name]
+    assert_equal 9, @@char.race[:id]
   end
   
-  def test_talents
+  def _test_talents
+    # Talents no longer seem to be in the "old" armory API
     assert_equal 2, @@char.talents.length
   end
   
   def test_is_a
     assert @@char.is_a_priest?
-    assert @@char.is_a_dwarf?
+    assert @@char.is_a_goblin?
     assert !@@char.is_a_druid?
   end
   
-  def test_is_a_spec_class
-    stitchez = Armoruby::Character.new("Stitchez")
-    gib = Armoruby::Character.new("Gibolok")
+  def _test_is_a_spec_class
+    # Talents no longer seem to be in the "old" armory API
+    aisiri = Armoruby::Character.new("Aisiri")
     
-    assert gib.is_a_warrior?
-    assert gib.is_a_prot_warrior?
-    
-    assert stitchez.is_a_unholy_death_knight?
-    
-    assert @@char.is_a_holy_priest?
+    assert aisiri.is_a_shaman?
+    assert aisiri.is_a_resto_shaman?
   end
   
 end
@@ -74,7 +71,7 @@ class DunderCharacterTestAnotherRegion < Test::Unit::TestCase
   def setup
     if !@@char
       Armoruby.setup :region => "us", :realm => "sen'jin"
-      @@char = Armoruby::Character.new("Segolene")
+      @@char ||= Armoruby::Character.new("Segolene")
     end
   end
 
@@ -87,7 +84,7 @@ class DunderCharacterTestAnotherRegion < Test::Unit::TestCase
   end
   
   def test_level
-    assert_equal 80, @@char.level
+    assert_equal 85, @@char.level
   end
   
   def test_klass
